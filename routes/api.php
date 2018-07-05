@@ -13,6 +13,4 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth.basic')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::middleware('auth.basic')->get('/list', 'MessageController@index');

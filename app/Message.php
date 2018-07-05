@@ -8,7 +8,6 @@ class Message extends Model
 {
     const STATUS_READ = 'read';
     const STATUS_UNREAD = 'unread';
-    const STATUS_ARCHIVED = 'archived';
 
     /**
      * @var bool
@@ -27,5 +26,6 @@ class Message extends Model
      */
     protected $attributes = [
         'status' => self::STATUS_UNREAD,
+        'isArchived' => false,
     ];
 }

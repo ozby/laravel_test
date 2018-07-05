@@ -20,7 +20,8 @@ class CreateMessagesTable extends Migration
             $table->string('subject');
             $table->string('message');
             $table->dateTime('time_sent');
-            $table->enum('status', [Message::STATUS_ARCHIVED, Message::STATUS_UNREAD, Message::STATUS_READ]);
+            $table->enum('status', [Message::STATUS_UNREAD, Message::STATUS_READ]);
+            $table->boolean('isArchived');
         });
     }
 

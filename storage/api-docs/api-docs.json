@@ -6,6 +6,43 @@
     },
     "basePath": "/api",
     "paths": {
+        "/list": {
+            "get": {
+                "summary": "Gets list of messages",
+                "parameters": [
+                    {
+                        "name": "status",
+                        "in": "path",
+                        "description": "Read status",
+                        "required": false,
+                        "type": "string",
+                        "enum": [
+                            "read",
+                            "unread"
+                        ]
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "From",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "How many records should be returned",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
         "/sample": {
             "get": {
                 "summary": "Sample",
