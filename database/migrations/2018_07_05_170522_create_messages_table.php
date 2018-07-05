@@ -1,5 +1,6 @@
 <?php
 
+use App\Message;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -19,7 +20,7 @@ class CreateMessagesTable extends Migration
             $table->string('subject');
             $table->string('message');
             $table->dateTime('time_sent');
-//            $table->timestamps();
+            $table->enum('status', [Message::STATUS_ARCHIVED, Message::STATUS_UNREAD, Message::STATUS_READ]);
         });
     }
 

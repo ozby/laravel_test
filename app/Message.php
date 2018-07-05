@@ -6,14 +6,26 @@ use Jenssegers\Mongodb\Eloquent\Model;
 
 class Message extends Model
 {
+    const STATUS_READ = 'read';
+    const STATUS_UNREAD = 'unread';
+    const STATUS_ARCHIVED = 'archived';
+
     /**
-     * Indicates if the model should be timestamped.
-     *
      * @var bool
      */
     public $timestamps = false;
 
+    /**
+     * @var array
+     */
     protected $dates = [
         'time_sent',
+    ];
+
+    /**
+     * @var array
+     */
+    protected $attributes = [
+        'status' => self::STATUS_UNREAD,
     ];
 }
