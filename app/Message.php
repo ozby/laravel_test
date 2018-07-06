@@ -9,6 +9,7 @@ class Message extends Model
     const STATUS_READ = 'read';
     const STATUS_UNREAD = 'unread';
 
+    protected $hidden = ['isArchived'];
     /**
      * @var bool
      */

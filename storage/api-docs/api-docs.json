@@ -43,9 +43,46 @@
                 }
             }
         },
-        "/message/{uid}": {
+        "/listArchived": {
             "get": {
-                "summary": "Display a message",
+                "summary": "Gets list of archived messages",
+                "parameters": [
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "Read status",
+                        "required": false,
+                        "type": "string",
+                        "enum": [
+                            "read",
+                            "unread"
+                        ]
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "From",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "How many records should be returned",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/read/{uid}": {
+            "put": {
+                "summary": "Mark a message as read",
                 "parameters": [
                     {
                         "name": "uid",
@@ -62,9 +99,37 @@
                 }
             }
         },
-        "/sample": {
+        "/archive/{uid}": {
+            "put": {
+                "summary": "Mark a message as read",
+                "parameters": [
+                    {
+                        "name": "uid",
+                        "in": "path",
+                        "description": "Id of the message",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/message/{uid}": {
             "get": {
-                "summary": "Sample",
+                "summary": "Display a message",
+                "parameters": [
+                    {
+                        "name": "uid",
+                        "in": "path",
+                        "description": "Id of the message",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "successful operation"

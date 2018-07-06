@@ -41,7 +41,7 @@ class MessageController extends Controller
      *
      * @return Message[]|Collection
      */
-    public function index(Request $request)
+    public function index(Request $request, $archived = false)
     {
         $this->validate($request, [
             'status' => 'in:' . Message::STATUS_READ . ',' . Message::STATUS_UNREAD,
@@ -53,13 +53,112 @@ class MessageController extends Controller
         $offset = (int)$request->get("offset");
         $limit = (int)$request->get("limit");
 
+        $message = Message::where('isArchived', '=', $archived);
         if ($status) {
-            $collection = Message::where('status', '=', $status)->skip($offset)->take($limit)->get();
+            $collection = $message->where('status', '=', $status)->skip($offset)->take($limit)->get();
         } else {
-            $collection = Message::skip($offset)->take($limit)->get();
+            $collection = $message->skip($offset)->take($limit)->get();
         }
 
         return $collection;
+    }
+    /**
+     * @SWG\Get(
+     *   path="/listArchived",
+     *   summary="Gets list of archived messages",
+     *   @SWG\Parameter(
+     *            name="status",
+     *            in="query",
+     *            required=false,
+     *            type="string",
+     *            description="Read status",
+     *          enum={"read", "unread"}
+     *  ),
+     *   @SWG\Parameter(
+     *            name="offset",
+     *            in="query",
+     *            required=true,
+     *            type="integer",
+     *            description="From"
+     *  ),
+     *   @SWG\Parameter(
+     *            name="limit",
+     *            in="query",
+     *            required=true,
+     *            type="integer",
+     *            description="How many records should be returned"
+     *  ),
+     *   @SWG\Response(response=200, description="successful operation")
+     * )
+     *
+     * Display a listing of the resource.
+     *
+     * @return Message[]|Collection
+     */
+    public function indexArchived(Request $request)
+    {
+        return $this->index($request, true);
+    }
+
+    /**
+     * @SWG\Put(
+     *   path="/read/{uid}",
+     *   summary="Mark a message as read",
+     *   @SWG\Parameter(
+     *            name="uid",
+     *            in="path",
+     *            required=true,
+     *            type="integer",
+     *            description="Id of the message"
+     *   ),
+     *   @SWG\Response(response=200, description="successful operation")
+     * )
+     *
+     * Mark a message as read
+     *
+     * @return Message
+     */
+    public function read($uid)
+    {
+        $response = Message::find($uid);
+        if ($response instanceof Message && $response->status === Message::STATUS_UNREAD) {
+            $response = clone $response;
+            $response->status = Message::STATUS_READ;
+            $response->save();
+        }
+
+        return $response;
+    }
+
+
+    /**
+     * @SWG\Put(
+     *   path="/archive/{uid}",
+     *   summary="Mark a message as archived",
+     *   @SWG\Parameter(
+     *            name="uid",
+     *            in="path",
+     *            required=true,
+     *            type="integer",
+     *            description="Id of the message"
+     *   ),
+     *   @SWG\Response(response=200, description="successful operation")
+     * )
+     *
+     * Mark a message as read
+     *
+     * @return Message
+     */
+    public function archive($uid)
+    {
+        $response = Message::find($uid);
+        if ($response->isArchived === false) {
+            $response = clone $response;
+            $response->isArchived = true;
+            $response->save();
+        }
+
+        return $response;
     }
 
     /**
@@ -80,18 +179,13 @@ class MessageController extends Controller
      *
      * @return Message
      */
-    public function read($uid)
+    public function show($uid)
     {
         $response = Message::find($uid);
-        if ($response instanceof Message) {
-            $message = clone $response;
-            $message->status = Message::STATUS_READ;
-            $message->save();
-        }
 
         return $response;
     }
 
 
-    
+
 }
