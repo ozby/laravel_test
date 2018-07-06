@@ -118,7 +118,7 @@ class MessageController extends Controller
      *
      * @return Message
      */
-    public function read($uid)
+    public function read(int $uid)
     {
         $response = Message::find($uid);
         if ($response instanceof Message && $response->status === Message::STATUS_UNREAD) {
@@ -149,7 +149,7 @@ class MessageController extends Controller
      *
      * @return Message
      */
-    public function archive($uid)
+    public function archive(int $uid)
     {
         $response = Message::find($uid);
         if ($response->isArchived === false) {
@@ -163,7 +163,7 @@ class MessageController extends Controller
 
     /**
      * @SWG\Get(
-     *   path="/message/{uid}",
+     *   path="/show/{uid}",
      *   summary="Display a message",
      *   @SWG\Parameter(
      *            name="uid",
@@ -179,10 +179,9 @@ class MessageController extends Controller
      *
      * @return Message
      */
-    public function show($uid)
+    public function show(int $uid)
     {
         $response = Message::find($uid);
-
         return $response;
     }
 

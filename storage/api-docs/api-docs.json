@@ -101,7 +101,7 @@
         },
         "/archive/{uid}": {
             "put": {
-                "summary": "Mark a message as read",
+                "summary": "Mark a message as archived",
                 "parameters": [
                     {
                         "name": "uid",
@@ -118,7 +118,7 @@
                 }
             }
         },
-        "/message/{uid}": {
+        "/show/{uid}": {
             "get": {
                 "summary": "Display a message",
                 "parameters": [
