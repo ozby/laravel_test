@@ -12,7 +12,7 @@
                 "parameters": [
                     {
                         "name": "status",
-                        "in": "path",
+                        "in": "query",
                         "description": "Read status",
                         "required": false,
                         "type": "string",
