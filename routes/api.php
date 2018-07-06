@@ -14,3 +14,4 @@ use Illuminate\Http\Request;
 */
 
 Route::middleware('auth.basic')->get('/list', 'MessageController@index');
+Route::middleware('auth.basic')->get('/message/{uid}', 'MessageController@read')->where('uid', '[0-9]+');

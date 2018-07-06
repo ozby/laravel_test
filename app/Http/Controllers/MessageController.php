@@ -61,4 +61,37 @@ class MessageController extends Controller
 
         return $collection;
     }
+
+    /**
+     * @SWG\Get(
+     *   path="/message/{uid}",
+     *   summary="Display a message",
+     *   @SWG\Parameter(
+     *            name="uid",
+     *            in="path",
+     *            required=true,
+     *            type="integer",
+     *            description="Id of the message"
+     *   ),
+     *   @SWG\Response(response=200, description="successful operation")
+     * )
+     *
+     * Display a message
+     *
+     * @return Message
+     */
+    public function read($uid)
+    {
+        $response = Message::find($uid);
+        if ($response instanceof Message) {
+            $message = clone $response;
+            $message->status = Message::STATUS_READ;
+            $message->save();
+        }
+
+        return $response;
+    }
+
+
+    
 }

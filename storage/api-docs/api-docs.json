@@ -43,6 +43,25 @@
                 }
             }
         },
+        "/message/{uid}": {
+            "get": {
+                "summary": "Display a message",
+                "parameters": [
+                    {
+                        "name": "uid",
+                        "in": "path",
+                        "description": "Id of the message",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
         "/sample": {
             "get": {
                 "summary": "Sample",
